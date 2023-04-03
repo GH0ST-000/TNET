@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\RemoveProductFromCartRequest;
 use App\Http\Requests\UpdateProductInCartRequest;
-use App\Http\Resources\CartResource;
 use App\Models\Cart;
 use App\Models\Product;
-use Illuminate\Support\Facades\Auth;
-use Ramsey\Collection\Collection;
+
 
 class CartController extends Controller
 {
@@ -40,8 +38,14 @@ class CartController extends Controller
     }
 
     public function Get(){
-        $cart = Cart::Where('user_id','1')->get();
-        return CartResource::collection($cart);
+        /**
+         * ჰარდკოდირებულია აიდი რადგან არ გვაქვს auth ობიექტან წვდომა,
+           გამომდინარე იქედან, რომ არ გვაქვს რეგისტრაცია ავტორიზაცია
+         */
+
+        $cart = new Cart();
+        return $cart->getUserCart('1');
+
     }
 
 }
